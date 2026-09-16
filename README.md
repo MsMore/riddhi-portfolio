@@ -19,7 +19,7 @@ Open http://127.0.0.1:3000. Dependencies are already installed in the working pr
 npm run build
 ```
 
-The build checks TypeScript and creates a static export in `out/`. Publish that directory to a static host and connect riddhimore.com later. Serve the export over HTTP; this static configuration does not use `next start`.
+The build checks TypeScript and creates a static export in `out/`. GitHub Actions publishes that directory to riddhimore.com. Serve the export over HTTP; this static configuration does not use `next start`.
 
 ## Layout
 
@@ -61,6 +61,6 @@ Production build and TypeScript checks pass. Desktop, tablet, and 320px phone la
 
 ## Publishing
 
-The GitHub Pages workflow in `.github/workflows/deploy.yml` builds and publishes pushes to `main` once repository Pages is enabled. The custom domain is `riddhimore.com`. Account setup and DNS connection are still pending; see DEPLOYMENT.md for the exact steps and current status.
+The site is live at [riddhimore.com](https://riddhimore.com), hosted on GitHub Pages with HTTPS. The [source repository](https://github.com/MsMore/riddhi-portfolio) publishes automatically when changes reach `main`. Domain registration and DNS remain at Hostinger. See DEPLOYMENT.md for deployment and DNS details.
 
 See CONTENT-SOURCES.md for source records and asset credits.
