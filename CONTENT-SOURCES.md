@@ -28,4 +28,4 @@ HumanEval's unverified 40% reliability and adoption claims are omitted in favor 
 - Simple Icons: CC0 collection. Technology marks identify tools, without implying endorsement.
 - Custom SVG cursors and RM favicon: authored for this portfolio.
 
-No personal photo, mascot, or external asset requests. The site remains a local static-export project with no deployment or DNS changes.
+No personal photo, mascot, or external asset requests. The static export is published on GitHub Pages at https://riddhimore.com, with domain registration and DNS at Hostinger.
