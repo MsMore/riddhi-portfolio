@@ -1,0 +1,22 @@
+# Riddhi More — AI Solutions Architect
+
+> Riddhi More is an AI Solutions Architect in Toronto who builds secure, useful AI systems for enterprise workflows. Her work spans enterprise agents, retrieval-augmented generation, MCP integrations, multilingual NLP, efficient model training, and reliable evaluation.
+
+This is a one-page professional portfolio. Current enterprise work and applied AI projects are emphasized before academic research. Claims described as résumé-reported or project-reported in the full portfolio should retain that attribution.
+
+## Portfolio
+
+- [Full portfolio in Markdown](https://riddhimore.com/index.md): Complete experience, education, process, projects, publications, skills, certifications, and contact information in a clean text format.
+- [Visual portfolio](https://riddhimore.com/): Interactive public website and canonical source.
+
+## Professional profiles
+
+- [LinkedIn](https://www.linkedin.com/in/riddhi-more/): Professional profile and employment history.
+- [GitHub](https://github.com/MsMore): Public code and project profile.
+
+## Selected research sources
+
+- [ALIGNFREEZE](https://arxiv.org/abs/2502.12959): NAACL 2025 paper on selective layer freezing during multilingual model realignment.
+- [FlakyXbert](https://www.sqrlab.ca/publications/icst2025_flakyxbert/): ICST 2025 work comparing fine-tuning and few-shot learning for flaky test detection.
+- [HumanEval_T](https://www.sqrlab.ca/publications/icst2025_humaneval_t/): ICST 2025 work addressing benchmark leakage with combinatorial test design.
+- [Data augmentation bias](https://www.sqrlab.ca/publications/fairness2025/): FAIRNESS 2025 study of augmentation-induced evaluation bias.

@@ -1,0 +1,6 @@
+# Riddhi More portfolio
+
+The standard LLM discovery file is available at:
+
+- [llms.txt](https://riddhimore.com/llms.txt)
+- [Full portfolio in Markdown](https://riddhimore.com/index.md)

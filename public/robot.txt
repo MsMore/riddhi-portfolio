@@ -1,0 +1,5 @@
+# Compatibility alias. The standard crawler file is /robots.txt.
+User-agent: *
+Allow: /
+
+Sitemap: https://riddhimore.com/sitemap.xml
