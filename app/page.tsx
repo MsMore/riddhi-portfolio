@@ -1,10 +1,10 @@
 import { contact, projects, experience, education } from './content';
 import { InteractiveNotebook } from './interactive-notebook';
-import { ThemeToggle } from './theme-toggle';
 import { Doodle, type DoodleName } from './doodle';
 import { PageInteractions, DetailControls, BuildProcess } from './notebook-controls';
 import { ProjectShelf } from './project-shelf';
 import { TechStack } from './tech-stack';
+import { SiteHeader } from './site-header';
 
 function ExternalLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
   return <a href={href} className={className} target="_blank" rel="noopener noreferrer">{children}<span className="sr-only"> (opens in a new tab)</span></a>;
@@ -15,7 +15,7 @@ function SectionHeading({ title, id, icon }: { title: string; id: string; icon: 
 export default function Home() {
   return <>
     <a className="skip-link" href="#main">Skip to content</a><PageInteractions/>
-    <header className="topbar page-wrap"><a className="wordmark" href="#home" aria-label="Riddhi More, home">riddhi more<Doodle name="star" size={24}/></a><nav aria-label="Main navigation"><a href="#about">About</a><a href="#experience">Experience</a><a href="#work">Projects</a><a href="#stack">Skills</a><a href="#contact">Contact</a></nav><ThemeToggle/></header>
+    <SiteHeader/>
     <main id="main">
       <section className="hero" id="home" aria-labelledby="hero-name">
         <InteractiveNotebook/>

@@ -9,7 +9,9 @@ export const metadata: Metadata = {
   title: 'Riddhi More — AI Systems & Enterprise Solutions',
   description: 'AI Solutions Architect in Toronto. Building secure, useful AI systems at the intersection of applied research and enterprise delivery.',
   alternates: { canonical: '/' },
-  icons: { icon: '/favicon.svg' },
+  manifest: '/manifest.webmanifest',
+  icons: { icon: '/favicon.svg', apple: '/apple-touch-icon.png' },
+  appleWebApp: { capable: true, title: 'Riddhi More', statusBarStyle: 'default' },
   openGraph: { title: 'Riddhi More — AI Systems & Enterprise Solutions', description: 'AI systems, enterprise automation, and applied research. Selected work by Riddhi More, AI Solutions Architect in Toronto.', type: 'website', locale: 'en_CA', url: 'https://riddhimore.com' },
 };
 
