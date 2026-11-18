@@ -6,8 +6,8 @@ import styles from './protected-demo.module.css';
 import { compassAPIEndpoint } from './cloud-config';
 
 type Download = { id: string; filename: string; mime: string; url: string; bytes: number };
-type Payload = { html: string; embedded: { id: string; mime: string; data: string }[]; downloads: Download[] };
-type Session = { key: CryptoKey; salt: Uint8Array; downloads: Map<string, Download> };
+type Payload = { html: string; embedded: { id: string; mime: string; data: string }[]; downloads: Download[]; analytics?: {id: string; filename: string}[] };
+type Session = { key: CryptoKey; salt: Uint8Array; downloads: Map<string, Download>; analytics: Set<string> };
 const MAGIC = new TextEncoder().encode('RIDDHI02');
 const ITERATIONS = 600000;
 const buffer = (value: Uint8Array) => new Uint8Array(value).buffer;
@@ -39,11 +39,13 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
   const request = useRef<AbortController | null>(null);
   const downloadRequest = useRef<AbortController | null>(null);
   const downloadUrl = useRef<string | null>(null);
+  const datasetRequests = useRef(new Map<string, AbortController>());
 
   const lock = useCallback(() => {
     epoch.current += 1;
     request.current?.abort(); request.current = null;
     downloadRequest.current?.abort(); downloadRequest.current = null;
+    datasetRequests.current.forEach(controller => controller.abort()); datasetRequests.current.clear();
     if (downloadUrl.current) URL.revokeObjectURL(downloadUrl.current); downloadUrl.current = null;
     session.current = null;
     if (frame.current) frame.current.srcdoc = '';
@@ -74,6 +76,30 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
     const message = async (event: MessageEvent) => {
       if (event.source !== frame.current?.contentWindow || event.origin !== location.origin) return;
       if (event.data?.type === 'riddhi-demo:lock') { lock(); return; }
+      if (event.data?.type === 'riddhi-demo:dataset') {
+        const port = event.ports[0], current = session.current;
+        if (!port) return;
+        const item = typeof event.data.id === 'string' && current?.analytics.has(event.data.id) ? current.downloads.get(event.data.id) : undefined;
+        if (!current || !item || id !== 'brand-compass') { port.postMessage({ok:false,error:'The dataset is not available in this session.'}); port.close(); return; }
+        if (datasetRequests.current.size >= 2 || datasetRequests.current.has(item.id)) { port.postMessage({ok:false,error:'A dataset is already being prepared. Please retry.'}); port.close(); return; }
+        const currentEpoch = epoch.current, controller = new AbortController();
+        datasetRequests.current.set(item.id, controller);
+        try {
+          const url = new URL(item.url, location.origin);
+          if (url.origin !== location.origin || !url.pathname.startsWith(`/protected-demos/${id}/`)) throw new Error('Unknown dataset.');
+          const response = await fetch(url, {cache:'force-cache',signal:controller.signal});
+          if (!response.ok) throw new Error('The dataset could not be loaded.');
+          const file = packet(await response.arrayBuffer());
+          if (epoch.current !== currentEpoch || session.current !== current || controller.signal.aborted) return;
+          if (file.salt.some((value, index) => value !== current.salt[index])) throw new Error('Dataset version mismatch. Reopen the app.');
+          const plain = await decrypt(file, current.key, id, item.id);
+          if (epoch.current !== currentEpoch || session.current !== current || controller.signal.aborted) return;
+          port.postMessage({ok:true,bytes:plain},[plain]);
+        } catch (error) {
+          if (epoch.current === currentEpoch && !controller.signal.aborted) port.postMessage({ok:false,error:error instanceof Error ? error.message : 'The dataset could not be prepared.'});
+        } finally { datasetRequests.current.delete(item.id); port.close(); }
+        return;
+      }
       if (event.data?.type !== 'riddhi-demo:download' || typeof event.data.id !== 'string') return;
       const current = session.current, item = current?.downloads.get(event.data.id);
       if (!current || !item) return;
@@ -140,7 +166,7 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
         const url = URL.createObjectURL(new Blob([bytes], { type: item.mime })); urls.current.push(url); assets[item.id] = url;
       }
       const html = payload.html.replace('__DEMO_BASE_ORIGIN__', location.origin).replace('__DEMO_ASSET_MAP__', JSON.stringify(assets).replace(/</g, '\\u003c')).replace('__COMPASS_CLOUD_SESSION__', JSON.stringify(cloudToken).replace(/</g, '\\u003c'));
-      session.current = { key, salt: encrypted.salt, downloads: new Map(payload.downloads.map(item => [item.id, item])) };
+      session.current = { key, salt: encrypted.salt, downloads: new Map(payload.downloads.map(item => [item.id, item])), analytics: new Set((payload.analytics || []).map(item => item.id)) };
       setPassword(''); setContent(html);
     } catch (e) {
       if (epoch.current !== currentEpoch || controller.signal.aborted) return;
