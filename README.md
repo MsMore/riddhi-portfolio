@@ -67,12 +67,12 @@ See CONTENT-SOURCES.md for source records and asset credits.
 
 ## Demonstrations
 
-- `/compass/`: a password-protected unit-volume analytics prototype, with two Excel inputs, synthetic treatment events, lag selection, chronological forecast evaluation and real open-source browser AI.
+- `/compass/`: a password-protected unit-volume analytics prototype, with two Excel inputs, synthetic treatment events, lag selection, chronological forecast evaluation and AI explanations through Groq.
 - `/deck/`: **From AI to Business Value**, a password-protected six-slide presentation built around project, stakeholder, capability, metrics and delivery diagrams. The viewer contains only slides and discreet navigation/presentation icons, with keyboard navigation and fullscreen mode.
 
-Both routes use the existing static GitHub Pages deployment. Brand Compass loads its WebLLM/Qwen3 model only after the visitor chooses **Load AI on this device**. The first load downloads several GB; later visits may reuse browser-cached files. A compatible WebGPU browser and enough GPU memory are required for AI; analytics remain available without loading a model. No API key or per-request AI service fee is required. Questions, retrieval, calculations and inference run in the visitor's browser.
+Both routes use the existing static GitHub Pages deployment. Compass connects automatically to a separate password-authenticated backend when its chat is opened. The backend calls Groq's GPT-OSS 20B API; no model download, GPU or visitor API key is required. The provider key and session-signing secret stay in the backend's secret store. Only a short-lived session token is passed to the unlocked app, in memory.
 
-Before presenting, load and test the model in the browser you will use on the final `riddhimore.com/compass/` URL. A localhost test or a different browser profile does not warm that site's model cache. Generated explanations require human review; chart values are supplied by bounded analytical functions. The demo includes no Amgen data, internal code or clinical advice.
+The browser retrieves supporting report evidence and supplies bounded qualitative context to the API. Questions and that context are sent to Groq; calculations and exact figures remain in native dashboard views. Each question uses a tool-selection call followed by an explanation call. Provider fees and rate limits apply to the owner's API account. Generated explanations require human review. The demo includes no Amgen data, internal code or clinical advice.
 
 Model-written interpretation is qualitative. Exact unit volumes, lag results, forecast dates and evaluation metrics appear in calculated chat views. Unsolicited action lists are withheld unless the question requests strategy or recommendations. Predictive associations do not establish clinical or commercial causation. Synthetic dose values are demonstration units, not medical guidance.
 

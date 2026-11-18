@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { LockKeyhole, ShieldCheck } from 'lucide-react';
 import styles from './protected-demo.module.css';
+import { compassAPIEndpoint } from './cloud-config';
 
 type Download = { id: string; filename: string; mime: string; url: string; bytes: number };
 type Payload = { html: string; embedded: { id: string; mime: string; data: string }[]; downloads: Download[] };
@@ -118,12 +119,27 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
       const payload = JSON.parse(text) as Payload;
       if (typeof payload.html !== 'string' || !Array.isArray(payload.embedded) || !Array.isArray(payload.downloads)) throw new Error('The protected package is incomplete.');
       if (epoch.current !== currentEpoch) return;
+      let cloudToken = '';
+      if (id === 'brand-compass' && compassAPIEndpoint) {
+        try {
+          const sessionResponse = await fetch(`${compassAPIEndpoint}/session`, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password }), cache: 'no-store',
+            signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]),
+          });
+          if (sessionResponse.ok) {
+            const authorized = await sessionResponse.json();
+            if (typeof authorized.token === 'string' && authorized.token.length < 2048) cloudToken = authorized.token;
+          }
+        } catch { /* The analytical dashboard remains usable if the AI service is unavailable. */ }
+      }
+      if (epoch.current !== currentEpoch || controller.signal.aborted) return;
       const assets: Record<string, string> = {};
       for (const item of payload.embedded) {
         const bytes = Uint8Array.from(atob(item.data), c => c.charCodeAt(0));
         const url = URL.createObjectURL(new Blob([bytes], { type: item.mime })); urls.current.push(url); assets[item.id] = url;
       }
-      const html = payload.html.replace('__DEMO_BASE_ORIGIN__', location.origin).replace('__DEMO_ASSET_MAP__', JSON.stringify(assets).replace(/</g, '\\u003c'));
+      const html = payload.html.replace('__DEMO_BASE_ORIGIN__', location.origin).replace('__DEMO_ASSET_MAP__', JSON.stringify(assets).replace(/</g, '\\u003c')).replace('__COMPASS_CLOUD_SESSION__', JSON.stringify(cloudToken).replace(/</g, '\\u003c'));
       session.current = { key, salt: encrypted.salt, downloads: new Map(payload.downloads.map(item => [item.id, item])) };
       setPassword(''); setContent(html);
     } catch (e) {
