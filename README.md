@@ -68,7 +68,7 @@ See CONTENT-SOURCES.md for source records and asset credits.
 ## Demonstrations
 
 - `/brand-compass/`: a password-protected unit-volume analytics prototype, with two Excel inputs, synthetic treatment events, lag selection, chronological forecast evaluation and real open-source browser AI.
-- `/aida-contribution/`: a password-protected ten-slide contribution presentation with concise bullets, separate speaker notes, keyboard navigation, fullscreen mode and PDF/PowerPoint downloads.
+- `/aida-contribution/`: **From AI to Business Value**, a password-protected six-slide presentation built around project, stakeholder, capability, metrics and delivery diagrams. The viewer contains only slides and discreet navigation/presentation icons, with keyboard navigation and fullscreen mode.
 
 Both routes use the existing static GitHub Pages deployment. Brand Compass loads its WebLLM/Qwen3 model only after the visitor chooses **Load AI on this device**. The first load downloads several GB; later visits may reuse browser-cached files. A compatible WebGPU browser and enough GPU memory are required for AI; analytics remain available without loading a model. No API key or per-request AI service fee is required. Questions, retrieval, calculations and inference run in the visitor's browser.
 
