@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { LockKeyhole, LoaderCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { LockKeyhole, ShieldCheck } from 'lucide-react';
 import styles from './protected-demo.module.css';
 
 type Download = { id: string; filename: string; mime: string; url: string; bytes: number };
@@ -30,6 +30,7 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const passwordInput = useRef<HTMLInputElement>(null);
   const frame = useRef<HTMLIFrameElement>(null);
   const session = useRef<Session | null>(null);
   const urls = useRef<string[]>([]);
@@ -63,6 +64,10 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
     const timeout = window.setTimeout(() => setNotice(''), 7000);
     return () => window.clearTimeout(timeout);
   }, [notice]);
+
+  useEffect(() => {
+    if (!content && !busy) passwordInput.current?.focus({ preventScroll: true });
+  }, [content, busy]);
 
   useEffect(() => {
     const message = async (event: MessageEvent) => {
@@ -129,5 +134,5 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
   };
 
   if (content) return <main className={styles.open}>{!bare && <header className={styles.toolbar}><span><ShieldCheck size={15}/>{title}</span><div>{notice && <small role="status">{notice}</small>}<button onClick={lock}><LockKeyhole size={14}/>Lock app</button></div></header>}<iframe ref={frame} title={title} srcDoc={content} allow="fullscreen; clipboard-write" allowFullScreen className={`${styles.frame} ${bare ? styles.fullFrame : ''}`}/>{bare && notice && <div className={styles.downloadNotice} role="status">{notice}</div>}</main>;
-  return <main className={styles.locked}><section className={styles.card}><div className={styles.symbol}><LockKeyhole size={25}/></div><p className={styles.eyebrow}>PRIVATE PRESENTATION & DEMO</p><h1>{title}</h1><p className={styles.description}>Enter the password to open this app.</p><form onSubmit={unlock}><label htmlFor="demo-password">Password</label><input id="demo-password" type="password" name="demo-passcode" value={password} onChange={e => setPassword(e.target.value)} autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={256} autoFocus disabled={busy}/><button disabled={busy || !password}>{busy ? <><LoaderCircle size={17} className={styles.spin}/>Unlocking…</> : <>Open app<ArrowRight size={17}/></>}</button></form>{error && <p role="alert" className={styles.error}>{error}</p>}<p className={styles.note}>The password is not remembered. Reopening or reloading this page asks again.</p></section></main>;
+  return <main className={styles.locked}><form className={styles.passwordForm} onSubmit={unlock} aria-busy={busy}><input ref={passwordInput} id="demo-password" type="password" name="demo-passcode" aria-label="Password" aria-invalid={!!error} aria-describedby={error ? 'password-error' : undefined} placeholder={busy ? 'Opening…' : 'Password'} value={password} onChange={e => { setPassword(e.target.value); setError(''); }} autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={256} enterKeyHint="go" autoFocus disabled={busy}/>{error && <span id="password-error" role="alert" className={styles.srOnly}>{error}</span>}</form></main>;
 }
