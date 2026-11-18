@@ -67,13 +67,17 @@ See CONTENT-SOURCES.md for source records and asset credits.
 
 ## Demonstrations
 
-- `/brand-compass/`: an independent commercial analytics prototype with fictional brands and records, forecasts, explicit planning scenarios, retrieved fictional documents and real open-source AI in the browser.
-- `/aida-contribution/`: a nine-slide contribution presentation with keyboard navigation, fullscreen mode, accessible transcripts, public-safe speaker notes and PDF/PowerPoint downloads.
+- `/brand-compass/`: a password-protected unit-volume analytics prototype, with two Excel inputs, synthetic treatment events, lag selection, chronological forecast evaluation and real open-source browser AI.
+- `/aida-contribution/`: a password-protected ten-slide contribution presentation with concise bullets, separate speaker notes, keyboard navigation, fullscreen mode and PDF/PowerPoint downloads.
 
 Both routes use the existing static GitHub Pages deployment. Brand Compass loads its WebLLM/Qwen3 model only after the visitor chooses **Load AI on this device**. The first load downloads several GB; later visits may reuse browser-cached files. A compatible WebGPU browser and enough GPU memory are required for AI; analytics remain available without loading a model. No API key or per-request AI service fee is required. Questions, retrieval, calculations and inference run in the visitor's browser.
 
 Before presenting, load and test the model in the browser you will use on the final `riddhimore.com/brand-compass/` URL. A localhost test or a different browser profile does not warm that site's model cache. Generated explanations require human review; chart values are supplied by bounded analytical functions. The demo includes no Amgen data, internal code or clinical advice.
 
-Model-written interpretation is qualitative. Exact sales figures, scenario assumptions, forecast totals, dates and error metrics appear in calculated chat views. Unsolicited action lists are withheld unless the question requests strategy or recommendations.
+Model-written interpretation is qualitative. Exact unit volumes, lag results, forecast dates and evaluation metrics appear in calculated chat views. Unsolicited action lists are withheld unless the question requests strategy or recommendations. Predictive associations do not establish clinical or commercial causation. Synthetic dose values are demonstration units, not medical guidance.
+
+The dashboard summarizes 60 monthly observations and a synthetic five-year population of 2,369,871 events with 64 columns. The clinical Excel file contains a clearly labeled 3,000-row sample. The complete population is available as six calendar-year CSV.gz downloads after unlocking; those files are fetched only when requested. Rolling one-step holdout scores and fixed-origin unseen-quarter scores are labeled separately.
+
+The repository contains a generic unlock screen and prebuilt encrypted app/download packages. Application sources and the package builder are kept in the owner's separate local authoring workspace. Password-derived AES-GCM keys and decrypted content remain in page memory; reload, close/reopen, and back/forward restoration require unlocking again. Passwords and keys are not written to browser storage. Use **Lock app** to clear the current page immediately. Downloaded files remain on the visitor's device. This is static password protection, without accounts, server-side rate limits or identity-based access. Previously published versions can remain in Git history; the current deployment does not serve their plaintext assets.
 
 The new pages use scoped styles. `trailingSlash: true` emits route folders with `index.html` for GitHub Pages. The portfolio landing page retains its content and interactions.

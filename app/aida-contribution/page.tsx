@@ -1,18 +1,19 @@
 import type { Metadata } from 'next';
-import AidaContribution from './AidaContribution';
+import ProtectedDemo from '../private-demos/ProtectedDemo';
+import { protectedPackages } from '../private-demos/manifest';
 
 export const metadata: Metadata = {
   title: 'My Contribution to AIDA | Riddhi More',
-  description: 'Riddhi More on observability, AI metrics, leadership communication, governance and delivery across squads.',
+  description: 'A private interview presentation.',
+  robots: { index: false, follow: false },
   alternates: { canonical: '/aida-contribution' },
   openGraph: {
     title: 'My Contribution to AIDA | Riddhi More',
-    description: 'Measurable AI in everyday operations.',
+    description: 'A private interview presentation.',
     url: 'https://riddhimore.com/aida-contribution',
-    images: [{ url: '/aida-contribution/slides/slide-01.png', width: 1280, height: 720 }],
   },
 };
 
 export default function AidaContributionPage() {
-  return <AidaContribution />;
+  return <ProtectedDemo id="aida-contribution" title="My Contribution to AIDA" packageUrl={protectedPackages['aida-contribution']} />;
 }
