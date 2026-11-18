@@ -64,3 +64,16 @@ Production build and TypeScript checks pass. Desktop, tablet, and 320px phone la
 The site is live at [riddhimore.com](https://riddhimore.com), hosted on GitHub Pages with HTTPS. The [source repository](https://github.com/MsMore/riddhi-portfolio) publishes automatically when changes reach `main`. Domain registration and DNS remain at Hostinger. See DEPLOYMENT.md for deployment and DNS details.
 
 See CONTENT-SOURCES.md for source records and asset credits.
+
+## Demonstrations
+
+- `/brand-compass/`: an independent commercial analytics prototype with fictional brands and records, forecasts, explicit planning scenarios, retrieved fictional documents and real open-source AI in the browser.
+- `/aida-contribution/`: a nine-slide contribution presentation with keyboard navigation, fullscreen mode, accessible transcripts, public-safe speaker notes and PDF/PowerPoint downloads.
+
+Both routes use the existing static GitHub Pages deployment. Brand Compass loads its WebLLM/Qwen3 model only after the visitor chooses **Load AI on this device**. The first load downloads several GB; later visits may reuse browser-cached files. A compatible WebGPU browser and enough GPU memory are required for AI; analytics remain available without loading a model. No API key or per-request AI service fee is required. Questions, retrieval, calculations and inference run in the visitor's browser.
+
+Before presenting, load and test the model in the browser you will use on the final `riddhimore.com/brand-compass/` URL. A localhost test or a different browser profile does not warm that site's model cache. Generated explanations require human review; chart values are supplied by bounded analytical functions. The demo includes no Amgen data, internal code or clinical advice.
+
+Model-written interpretation is qualitative. Exact sales figures, scenario assumptions, forecast totals, dates and error metrics appear in calculated chat views. Unsolicited action lists are withheld unless the question requests strategy or recommendations.
+
+The new pages use scoped styles. `trailingSlash: true` emits route folders with `index.html` for GitHub Pages. The portfolio landing page retains its content and interactions.

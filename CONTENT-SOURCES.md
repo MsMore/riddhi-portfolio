@@ -29,3 +29,10 @@ HumanEval's unverified 40% reliability and adoption claims are omitted in favor 
 - Custom SVG cursors and RM favicon: authored for this portfolio.
 
 No personal photo, mascot, or external asset requests. The static export is published on GitHub Pages at https://riddhimore.com, with domain registration and DNS at Hostinger.
+# Interview demonstration additions
+
+Brand Compass uses 828 newly generated fictional commercial records and eight newly written fictional review/methodology documents. It is an independent illustration of business analytics and AI delivery; no Amgen code, internal documents, commercial results or customer/patient data are reproduced. Forecast bands are illustrative historical-error bands; scenarios are conditional arithmetic rather than estimates of causal lift.
+
+Browser inference uses [WebLLM](https://webllm.mlc.ai/docs/user/basic_usage.html) and its prebuilt Qwen3 4B model catalog. Weights/runtime assets are fetched from the model/runtime URLs in the pinned SDK catalog after explicit initialization. The model plans bounded read-only analytical calls and writes a structured answer; deterministic functions produce chart values.
+
+The contribution deck draws on Riddhi's supplied professional experience and her direct explanations of Brand Compass and the governance/marketplace approval workflow. Proposed AIDA practices and the first-90-day plan are labeled as proposals. Public downloads and notes omit private recruitment email URLs and account addresses. All numerical business examples in the deck refer to the synthetic prototype, not Amgen or CIBC outcomes.
