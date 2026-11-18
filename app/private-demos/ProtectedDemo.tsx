@@ -59,6 +59,12 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
   }, [packageUrl, lock]);
 
   useEffect(() => {
+    if (!notice || notice.startsWith('Preparing ')) return;
+    const timeout = window.setTimeout(() => setNotice(''), 7000);
+    return () => window.clearTimeout(timeout);
+  }, [notice]);
+
+  useEffect(() => {
     const message = async (event: MessageEvent) => {
       if (event.source !== frame.current?.contentWindow || event.origin !== location.origin) return;
       if (event.data?.type === 'riddhi-demo:lock') { lock(); return; }
@@ -122,6 +128,6 @@ export default function ProtectedDemo({ id, title, packageUrl, bare = false }: {
     } finally { if (epoch.current === currentEpoch) { setBusy(false); request.current = null; } }
   };
 
-  if (content) return <main className={styles.open}>{!bare && <header className={styles.toolbar}><span><ShieldCheck size={15}/>{title}</span><div>{notice && <small role="status">{notice}</small>}<button onClick={lock}><LockKeyhole size={14}/>Lock app</button></div></header>}<iframe ref={frame} title={title} srcDoc={content} allow="fullscreen; clipboard-write" allowFullScreen className={`${styles.frame} ${bare ? styles.fullFrame : ''}`}/></main>;
+  if (content) return <main className={styles.open}>{!bare && <header className={styles.toolbar}><span><ShieldCheck size={15}/>{title}</span><div>{notice && <small role="status">{notice}</small>}<button onClick={lock}><LockKeyhole size={14}/>Lock app</button></div></header>}<iframe ref={frame} title={title} srcDoc={content} allow="fullscreen; clipboard-write" allowFullScreen className={`${styles.frame} ${bare ? styles.fullFrame : ''}`}/>{bare && notice && <div className={styles.downloadNotice} role="status">{notice}</div>}</main>;
   return <main className={styles.locked}><section className={styles.card}><div className={styles.symbol}><LockKeyhole size={25}/></div><p className={styles.eyebrow}>PRIVATE PRESENTATION & DEMO</p><h1>{title}</h1><p className={styles.description}>Enter the password to open this app.</p><form onSubmit={unlock}><label htmlFor="demo-password">Password</label><input id="demo-password" type="password" name="demo-passcode" value={password} onChange={e => setPassword(e.target.value)} autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={256} autoFocus disabled={busy}/><button disabled={busy || !password}>{busy ? <><LoaderCircle size={17} className={styles.spin}/>Unlocking…</> : <>Open app<ArrowRight size={17}/></>}</button></form>{error && <p role="alert" className={styles.error}>{error}</p>}<p className={styles.note}>The password is not remembered. Reopening or reloading this page asks again.</p></section></main>;
 }
