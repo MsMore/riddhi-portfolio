@@ -70,8 +70,6 @@ See CONTENT-SOURCES.md for source records and asset credits.
 - `/compass/`: a password-protected unit-volume analytics prototype, with two Excel inputs, synthetic treatment events, lag selection, chronological forecast evaluation and real open-source browser AI.
 - `/deck/`: **From AI to Business Value**, a password-protected six-slide presentation built around project, stakeholder, capability, metrics and delivery diagrams. The viewer contains only slides and discreet navigation/presentation icons, with keyboard navigation and fullscreen mode.
 
-The previous `/brand-compass/` and `/aida-contribution/` links remain available as aliases.
-
 Both routes use the existing static GitHub Pages deployment. Brand Compass loads its WebLLM/Qwen3 model only after the visitor chooses **Load AI on this device**. The first load downloads several GB; later visits may reuse browser-cached files. A compatible WebGPU browser and enough GPU memory are required for AI; analytics remain available without loading a model. No API key or per-request AI service fee is required. Questions, retrieval, calculations and inference run in the visitor's browser.
 
 Before presenting, load and test the model in the browser you will use on the final `riddhimore.com/compass/` URL. A localhost test or a different browser profile does not warm that site's model cache. Generated explanations require human review; chart values are supplied by bounded analytical functions. The demo includes no Amgen data, internal code or clinical advice.
